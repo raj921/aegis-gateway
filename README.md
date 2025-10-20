@@ -433,10 +433,3 @@ tail -f logs/aegis.log
 
 MIT
 
-## Author
-
-Built as a production-style coding test demonstrating:
-- Clean architecture
-- Security-first design
-- Production-grade observability
-- Extensible policy engine
