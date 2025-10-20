@@ -1,0 +1,134 @@
+Aegis Gateway - Project Structure
+===================================
+
+aegis-gateway/
+├── cmd/
+│   └── aegis/
+│       └── main.go                  # Main application entry point
+│
+├── internal/
+│   ├── gateway/
+│   │   └── gateway.go               # HTTP gateway & routing logic
+│   ├── policy/
+│   │   └── policy.go                # Policy engine & evaluation
+│   └── adapters/
+│       ├── payments/
+│       │   └── payments.go          # Payments tool adapter
+│       └── files/
+│           └── files.go             # Files tool adapter
+│
+├── pkg/
+│   └── telemetry/
+│       └── telemetry.go             # OpenTelemetry & audit logging
+│
+├── policies/
+│   ├── finance-policy.yaml          # Finance agent policies
+│   ├── hr-policy.yaml               # HR agent policies
+│   └── example-multi-agent.yaml     # Multi-agent example
+│
+├── scripts/
+│   ├── demo.sh                      # Demonstrates 4 test cases
+│   ├── test-hot-reload.sh           # Tests policy hot-reload
+│   ├── verify-all.sh                # Complete verification
+│   ├── curl-examples.sh             # Manual test examples
+│   └── start.sh                     # Quick start script
+│
+├── deploy/
+│   ├── docker-compose.yml           # Full stack deployment
+│   ├── Dockerfile                   # Gateway container image
+│   └── otel-collector-config.yaml   # OpenTelemetry config
+│
+├── logs/
+│   └── aegis.log                    # Structured JSON audit logs
+│
+├── bin/
+│   └── aegis-gateway                # Compiled binary
+│
+├── README.md                         # Comprehensive documentation
+├── DESIGN.md                         # Architecture & design decisions
+├── QUICK_START.md                    # Quick start guide
+├── ACCEPTANCE_CHECKLIST.md           # Test requirements verification
+├── SUBMISSION.md                     # Submission summary
+├── PROJECT_STRUCTURE.txt             # This file
+├── Makefile                          # Convenient build commands
+├── .gitignore                        # Git ignore rules
+├── go.mod                            # Go module definition
+└── go.sum                            # Go dependencies checksum
+
+Key Files by Purpose
+====================
+
+Entry Point:
+  - cmd/aegis/main.go
+
+Core Logic:
+  - internal/gateway/gateway.go      # Request handling & forwarding
+  - internal/policy/policy.go        # Policy evaluation
+  - pkg/telemetry/telemetry.go       # Observability
+
+Mock Tools:
+  - internal/adapters/payments/      # Payment operations
+  - internal/adapters/files/         # File operations
+
+Configuration:
+  - policies/*.yaml                  # Policy definitions
+  - deploy/docker-compose.yml        # Deployment config
+
+Scripts:
+  - scripts/demo.sh                  # Main demo
+  - scripts/verify-all.sh            # Complete test suite
+
+Documentation:
+  - README.md                        # Main documentation
+  - DESIGN.md                        # Technical deep dive
+  - QUICK_START.md                   # Fast setup guide
+
+Build Artifacts:
+  - bin/aegis-gateway                # Compiled binary
+  - logs/aegis.log                   # Runtime audit logs
+
+Lines of Code
+=============
+  - Go source:        ~800 LOC
+  - Shell scripts:    ~250 LOC
+  - YAML configs:     ~80 LOC
+  - Documentation:    ~1200 LOC
+  - Total:            ~2330 LOC
+
+Dependencies
+============
+  - gorilla/mux                      # HTTP routing
+  - fsnotify/fsnotify                # File system watching
+  - google/uuid                      # Unique identifiers
+  - gopkg.in/yaml.v3                 # YAML parsing
+  - go.opentelemetry.io/otel         # Distributed tracing
+  - go.opentelemetry.io/otel/sdk     # OpenTelemetry SDK
+
+API Endpoints
+=============
+Gateway:
+  POST   /tools/:tool/:action        # Execute tool action
+  GET    /health                     # Health check
+  POST   /policies/reload            # Reload policies
+
+Payments Adapter (port 8081):
+  POST   /create                     # Create payment
+  POST   /refund                     # Refund payment
+
+Files Adapter (port 8082):
+  POST   /read                       # Read file
+  POST   /write                      # Write file
+
+Quick Commands
+==============
+  make run           # Start gateway
+  make build         # Build binary
+  make demo          # Run demo
+  make clean         # Clean artifacts
+  make docker-up     # Deploy with Docker
+
+Verification
+============
+  ./scripts/verify-all.sh            # Complete test suite
+  make demo                          # Run 4 test scenarios
+  tail -f logs/aegis.log             # View audit logs
